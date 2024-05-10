@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <title>Landing Page</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- <link href="tailwind.css" rel="stylesheet"> -->
+    <link href="/css/main.css" rel="stylesheet">
 </head>
-<body>
-    <div style="width: 50%; float: left;">
-        <h2>Login</h2>
+
+<body class="flex h-screen">
+    <div class="w-1/2">
+        <h1>Login</h1>
         <form th:action="@{/login}" method="post">
             <label for="username">Username:</label><br>
             <input type="text" id="username" name="username" required><br>
@@ -14,5 +19,11 @@
             <input type="submit" value="Login">
         </form>
     </div>
+    <div class="w-1/2" id="canvas-container">
+        <canvas></canvas>
+    </div>
+
+    <script type="module" src="/js/earth.js"></script>
 </body>
+
 </html>
