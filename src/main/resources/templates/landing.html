@@ -4,26 +4,56 @@
 <head>
     <title>Landing Page</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <!-- <link href="tailwind.css" rel="stylesheet"> -->
     <link href="/css/main.css" rel="stylesheet">
 </head>
 
 <body class="flex h-screen">
-    <div class="w-1/2">
-        <h1>Login</h1>
-        <form th:action="@{/login}" method="post">
-            <label for="username">Username:</label><br>
-            <input type="text" id="username" name="username" required><br>
-            <label for="password">Password:</label><br>
-            <input type="password" id="password" name="password" required><br>
-            <input type="submit" value="Login">
-        </form>
+    <div class="w-1/2">\
+        <button id="registerFormButton">Register</button>
+        <button id="loginFormButton">Login</button>
+
+        <div id="registerForm" style="display: none;">
+            <h1>Register</h1>
+            <form th:action="@{/register}" method="post">
+                <label for="username">Username:</label><br>
+                <input type="text" id="username" name="username" required><br>
+                <label for="password">Password:</label><br>
+                <input type="password" id="password" name="password" required><br>
+                <label for="email">Email:</label><br>
+                <input type="email" id="email" name="email" required><br>
+                <input type="submit" value="Register">
+                <p th:text="${message}"></p>
+            </form>
+        </div>
+
+        <div id="loginForm" style="display: none;">
+            <h1>Login</h1>
+            <form th:action="@{/login}" method="post">
+                <label for="email">Email:</label><br>
+                <input type="text" id="email" name="email" required><br>
+                <label for="password">Password:</label><br>
+                <input type="password" id="password" name="password" required><br>
+                <input type="submit" value="Login">
+                <p th:text="${message}"></p>
+            </form>
+        </div>
     </div>
     <div class="w-1/2" id="canvas-container">
         <canvas></canvas>
     </div>
 
     <script type="module" src="/js/earth.js"></script>
+    <script>
+        document.getElementById("registerFormButton").addEventListener("click", function () {
+            document.getElementById("registerForm").style.display = "block";
+            document.getElementById("loginForm").style.display = "none";
+        });
+
+        document.getElementById("loginFormButton").addEventListener("click", function () {
+            document.getElementById("loginForm").style.display = "block";
+            document.getElementById("registerForm").style.display = "none";
+        });
+    </script>
 </body>
 
 </html>

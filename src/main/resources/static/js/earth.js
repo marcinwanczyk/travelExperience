@@ -27,6 +27,11 @@ const sphere = new THREE.Mesh(new THREE.SphereGeometry(5, 50, 50),
         ({ map: new THREE.TextureLoader().load('/img/globe.jpg') }))
 scene.add(sphere)
 
+const glowMap = new THREE.TextureLoader().load('/img/ring1.png')
+const glowMaterial = new THREE.MeshBasicMaterial({ map: glowMap, transparent: true, opacity: 0.2, blending: THREE.AdditiveBlending})
+const glowMesh = new THREE.Mesh(new THREE.SphereGeometry(5.2, 50, 50), glowMaterial)
+// scene.add(glowMesh) 
+
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.5)
 scene.add(ambientLight)
 
