@@ -1,8 +1,173 @@
-#canvas-container {
+/* #canvas-container {
     height: 100vh;
+    width: 50%;
+    align-self: flex-start;
   }
   
   #canvas-container canvas {
     width: 100%;
     height: 100%;
+  } */
+
+.container {
+  height: 100%;
+  width: 50%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  padding-top: 0%;
+}
+
+.left {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  left: 0;
+  background-color: black;
+  width: 40%;
+}
+
+.right {
+  width: 60%;
+  right: 0;
+}
+
+.right canvas {
+  width: 100%;
+  height: 100vh;
+}
+
+@keyframes slideInFromLeft {
+  0% {
+    /* transform: translateX(-100%); */
+    transform: scale(0);
   }
+
+  100% {
+    /* transform: translateX(0); */
+    transform: scale(1);
+  }
+}
+
+.wrapper {
+  animation: 0.6s ease-out 0s 1 slideInFromLeft;
+  position: relative;
+  width: 400px;
+  height: 450px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 40px;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.form-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+h2 {
+  font-size: 30px;
+  color: white;
+  text-align: center;
+}
+
+.input-group {
+  position: relative;
+  margin: 30px 0;
+  border-bottom: 2px solid white;
+}
+
+.input-group label {
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.input-group input {
+  width: 320px;
+  height: 40px;
+  font-size: 16px;
+  color: white;
+  padding: 0 5px;
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+.input-group input::placeholder {
+  color: white;
+}
+
+.form-submit {
+  position: relative;
+  width: 100%;
+  height: 40px;
+  background-color: palegreen;
+  font-size: 16px;
+  color: black;
+  cursor: pointer;
+  border-radius: 30px;
+  border: black;
+  outline: none;
+
+
+}
+
+.button-container {
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+  width: 220px;
+  height: 50px;
+  margin: 35px auto;
+  border-radius: 30px;
+  color: blueviolet;
+
+}
+
+.form-button {
+  padding: 10px 40px;
+  width: 50%;
+  height: 100%;
+  border: 0;
+  position: relative;
+  text-align: center;
+  background: transparent;
+  outline: black;
+  border: black;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+#btn{
+  left: 0;
+  top: 0;
+  position: absolute;
+  width: 110px;
+  height: 100%;
+  border-radius: 30px;
+  transition: 0.5s;
+
+}
+
+
+
+
+
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}

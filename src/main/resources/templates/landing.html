@@ -7,39 +7,58 @@
     <link href="/css/main.css" rel="stylesheet">
 </head>
 
-<body class="flex h-screen">
-    <div class="w-1/2">\
-        <button id="registerFormButton">Register</button>
-        <button id="loginFormButton">Login</button>
+<body>
+    <div>
+        <div class="container left">
+            <div class="wrapper">
+                <div class="button-container">
+                    <div class="btn"></div>
+                    <button id="loginFormButton" class="form-button" onclick="leftClick()">Login</button>
+                    
+                    <button id="registerFormButton" class="form-button" onclick="rightClick()">Register</button>
+                </div>
+                <div id="registerForm" class="form-container register" style="display: none;">
+                    <h2>Register</h2>
+                    <form th:action="@{/register}" method="post" class="form">
+                        <div class="input-group">
+                            <!-- <label for="username">Username:</label><br> -->
+                            <input type="text" id="username" name="username" placeholder="Username" required><br>
+                        </div>
+                        <div class="input-group">
+                            <!-- <label for="password">Password:</label><br> -->
+                            <input type="password" id="password" name="password" placeholder="Password" required><br>
+                        </div>
+                        <div class="input-group">
+                            <!-- <label for="email">Email:</label><br> -->
+                            <input type="email" id="email" name="email" placeholder="Email" required><br>
+                        </div>
+                        <input type="submit" value="Register" class="form-submit">
+                        <p th:text="${message}" class="form-message"></p>
+                    </form>
+                </div>
 
-        <div id="registerForm" style="display: none;">
-            <h1>Register</h1>
-            <form th:action="@{/register}" method="post">
-                <label for="username">Username:</label><br>
-                <input type="text" id="username" name="username" required><br>
-                <label for="password">Password:</label><br>
-                <input type="password" id="password" name="password" required><br>
-                <label for="email">Email:</label><br>
-                <input type="email" id="email" name="email" required><br>
-                <input type="submit" value="Register">
-                <p th:text="${message}"></p>
-            </form>
+                <div id="loginForm" class="form-container login" style="display: none;">
+                    <h2>Login</h2>
+                    <form th:action="@{/login}" method="post" class="form">
+                        <div class="input-group">
+                            <!-- <label for="email">Email:</label><br> -->
+                            <input type="text" id="email" name="email" placeholder="Email" required><br>
+                        </div>
+                        <div class="input-group">
+                            <!-- <label for="password">Password:</label><br> -->
+                            <input type="password" id="password" name="password" placeholder="Password" required><br>
+                        </div>
+                        <input type="submit" value="Login" class="form-submit">
+                        <p th:text="${message}" class="form-message"></p>
+                    </form>
+                </div>
+            </div>
         </div>
 
-        <div id="loginForm" style="display: none;">
-            <h1>Login</h1>
-            <form th:action="@{/login}" method="post">
-                <label for="email">Email:</label><br>
-                <input type="text" id="email" name="email" required><br>
-                <label for="password">Password:</label><br>
-                <input type="password" id="password" name="password" required><br>
-                <input type="submit" value="Login">
-                <p th:text="${message}"></p>
-            </form>
+        <div class="container right">
+            <canvas></canvas>
         </div>
-    </div>
-    <div class="w-1/2" id="canvas-container">
-        <canvas></canvas>
+
     </div>
 
     <script type="module" src="/js/earth.js"></script>
