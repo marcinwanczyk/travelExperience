@@ -172,6 +172,17 @@ h2 {
   color: black;
 }
 
+#flashMessage{
+  color: red;
+  text-align: center;
+  width: 100%;
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+}
+
 
 
 
