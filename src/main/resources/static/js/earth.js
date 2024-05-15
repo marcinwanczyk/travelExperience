@@ -7,7 +7,6 @@ const camera = new THREE.
     PerspectiveCamera(
         75,
         canvasContainer.offsetWidth / canvasContainer.offsetHeight,
-        // innerWidth / innerHeight,
         0.1,
         1000)
 const renderer = new THREE.WebGLRenderer(
@@ -17,27 +16,19 @@ const renderer = new THREE.WebGLRenderer(
     }
 );
 
-// renderer.setSize(innerWidth, innerHeight)
 renderer.setSize(canvasContainer.offsetWidth, canvasContainer.offsetHeight)
 renderer.setPixelRatio(window.devicePixelRatio)
 canvasContainer.appendChild(renderer.domElement)
 
-const sphere = new THREE.Mesh(new THREE.SphereGeometry(5, 50, 50),
+const sphere = new THREE.Mesh(new THREE.SphereGeometry(6, 60, 60),
     new THREE.MeshBasicMaterial
         ({ map: new THREE.TextureLoader().load('/img/globe.jpg') }))
 scene.add(sphere)
 
-const glowMap = new THREE.TextureLoader().load('/img/ring1.png')
-const glowMaterial = new THREE.MeshBasicMaterial({ map: glowMap, transparent: true, opacity: 0.2, blending: THREE.AdditiveBlending })
-const glowMesh = new THREE.Mesh(new THREE.SphereGeometry(5.2, 50, 50), glowMaterial)
+// const glowMap = new THREE.TextureLoader().load('/img/ring1.png')
+// const glowMaterial = new THREE.MeshBasicMaterial({ map: glowMap, transparent: true, opacity: 0.2, blending: THREE.AdditiveBlending })
+// const glowMesh = new THREE.Mesh(new THREE.SphereGeometry(5.2, 50, 50), glowMaterial)
 // scene.add(glowMesh) 
-
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.5)
-scene.add(ambientLight)
-
-const pointLight = new THREE.PointLight(0xffffff, 0.8)
-pointLight.position.set(5, 3, 5)
-scene.add(pointLight)
 
 const starGeometry = new THREE.BufferGeometry()
 const starMaterial = new THREE.PointsMaterial({ color: 0xffffff })
@@ -56,13 +47,13 @@ scene.add(stars)
 
 camera.position.z = 20
 
-addEventListener('mousedown', (event) => {
+canvasContainer.addEventListener('mousedown', (event) => {
     isMouseDown = true;
     startX = event.clientX;
     startY = event.clientY;
 });
 
-addEventListener('mousemove', (event) => {
+canvasContainer.addEventListener('mousemove', (event) => {
     if (isMouseDown) {
         const dx = event.clientX - startX;
         const dy = event.clientY - startY;
@@ -73,7 +64,7 @@ addEventListener('mousemove', (event) => {
     }
 });
 
-addEventListener('mouseup', () => {
+canvasContainer.addEventListener('mouseup', () => {
     isMouseDown = false;
 });
 
