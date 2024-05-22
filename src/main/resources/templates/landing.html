@@ -33,11 +33,11 @@
                                 <input type="email" id="email" name="email" placeholder="Email" required><br>
                             </div>
                             <input type="submit" value="Register" class="form-submit">
-                            <p th:text="${message}" class="form-message"></p>
+                            <p  id="flashMessage" th:text="${message}" class="form-message"></p>
                         </form>
                     </div>
 
-                    <div id="loginForm" class="form-container login" style="display: none;">
+                    <div id="loginForm" class="form-container login" style="display: block;">
                         <!-- <h2>Login</h2> -->
                         <form th:action="@{/login}" method="post" class="form">
                             <div class="input-group">
@@ -50,7 +50,7 @@
                                     required><br>
                             </div>
                             <input type="submit" value="Login" class="form-submit">
-                            <p th:text="${message}" class="form-message"></p>
+                            <p id="flashMessage" th:text="${message}" class="form-message"></p>
                         </form>
                     </div>
                 </div>
