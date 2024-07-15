@@ -1,24 +1,30 @@
+ 
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-
-</html>
-
+<html lang="en">
 <head>
-    <title>Hello, World!</title>
-    <style>
-        #userInfo {
-            position: flex;
-            top: 0;
-            left: 0;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>travelExpo</title>
+    <link rel="stylesheet" href="/css/main.css">
 </head>
-
 <body>
-    <div id="userInfo">
-        <p th:text="${username}"></p>
-        <p th:text="${email}"></p>
+    <!-- TODO: position and scale the svg map to the center -->
+    <div id="map" style="height: 100vh;">
+        <!-- <div id="userInfo"> -->
+            <!-- <p th:text="${email}"></p> -->
+        <!-- </div> -->
+        <div id="svgContainer"></div>
     </div>
-</body>
+    <script>
+        function loadSVG(url, containerID){
+            fetch(url).then(response => response.text()).then(svg => {
+                 document.getElementById(containerID).innerHTML = svg;
+            }).catch(error => console.error("error loading svg file: ", error));
+        }
+        loadSVG("svg/world.svg", "svgContainer");
+    </script>
 
+    </script>
+</body>
 </html>
