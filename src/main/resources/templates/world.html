@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
-    <!-- TODO: position and scale the svg map to the center -->
     <div id="map" style="height: 100vh;">
         <!-- <div id="userInfo"> -->
             <!-- <p th:text="${email}"></p> -->
@@ -20,8 +19,11 @@
         function loadSVG(url, containerID){
             fetch(url).then(response => response.text()).then(svg => {
                  document.getElementById(containerID).innerHTML = svg;
+                //  const svgElement = document.querySelector('#' + containerID + ' svg');
+                //  addZoom(svgElement);
             }).catch(error => console.error("error loading svg file: ", error));
         }
+        
         loadSVG("svg/world.svg", "svgContainer");
     </script>
 
