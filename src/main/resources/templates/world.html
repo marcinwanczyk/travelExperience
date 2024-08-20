@@ -1,32 +1,39 @@
- 
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>travelExpo</title>
-    <link rel="stylesheet" href="/css/main.css">
-</head>
-<body>
-    <div id="map" style="height: 100vh;">
-        <!-- <div id="userInfo"> -->
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>travelExpo</title>
+        <link rel="stylesheet" href="/css/main.css">
+    </head>
+    <body>
+        <div id="map" style="height: 100vh;">
+            <!-- <div id="userInfo"> -->
             <!-- <p th:text="${email}"></p> -->
-        <!-- </div> -->
-        <div id="svgContainer"></div>
-    </div>
-    <script>
-        function loadSVG(url, containerID){
-            fetch(url).then(response => response.text()).then(svg => {
-                 document.getElementById(containerID).innerHTML = svg;
-                //  const svgElement = document.querySelector('#' + containerID + ' svg');
-                //  addZoom(svgElement);
-            }).catch(error => console.error("error loading svg file: ", error));
-        }
+            <!-- </div> -->
+            <div id="svgContainer"></div>
+        </div>
+        <script src="/js/loadSVG.js"></script>
+        <script src="/js/zoom.js"></script>
+        <script src="/js/drag.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+                svg.setAttribute("width", "100%");
+                svg.setAttribute("height", "100%");
+                svg.setAttribute("viewBox", "-169.110266 83.600842 190.486279 58.508473");
+                svg.setAttribute("id", "mapSVG");
+                document.getElementById("svgContainer").appendChild(svg);
         
-        loadSVG("svg/world.svg", "svgContainer");
-    </script>
+                // Assuming drag.js exposes an initializeDrag() function
+                // This is just an example; adjust based on your actual drag script
+                if (typeof initializeDrag === "function") {
+                    initializeDrag();
+                }
+            });
+        </script>
 
-    </script>
-</body>
+    </body>
 </html>
