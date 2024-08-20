@@ -10,15 +10,14 @@
     </head>
     <body>
         <div id="map" style="height: 100vh;">
-            <!-- <div id="userInfo"> -->
-            <!-- <p th:text="${email}"></p> -->
-            <!-- </div> -->
             <div id="svgContainer"></div>
+            <div id="infoContainer"></div>
         </div>
         <script src="/js/loadSVG.js"></script>
         <script src="/js/zoom.js"></script>
         <script src="/js/drag.js"></script>
-        <script>
+        <script src="/js/api.js"></script>
+        <!-- <script>
             document.addEventListener('DOMContentLoaded', function() {
                 var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
                 svg.setAttribute("width", "100%");
@@ -33,7 +32,6 @@
                     initializeDrag();
                 }
             });
-        </script>
-
+        </script> -->
     </body>
 </html>

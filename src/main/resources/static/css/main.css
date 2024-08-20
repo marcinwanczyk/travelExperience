@@ -9,9 +9,9 @@
     height: 100%;
   } */
 
-  *{
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
-  }
+* {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+}
 
 .container {
   height: 100%;
@@ -156,7 +156,7 @@ h2 {
   transition: color 0.3s ease;
 }
 
-#btn{
+#btn {
   position: absolute;
   width: 50%;
   height: 100%;
@@ -168,11 +168,12 @@ h2 {
   transition: left 0.5s ease;
 }
 
-#loginFormButton:active, #registerFormButton:active {
+#loginFormButton:active,
+#registerFormButton:active {
   color: black;
 }
 
-#flashMessage{
+#flashMessage {
   color: red;
   text-align: center;
   width: 100%;
@@ -196,28 +197,55 @@ h2 {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background-color:rgba(19, 17, 17, 0.904);
+  background-color: rgba(19, 17, 17, 0.904);
   justify-content: center;
   align-items: center;
 }
 
-#svgContainer svg { 
+#svgContainer svg {
   transform: scale(1.3);
   max-width: 100%;
   max-height: 100%;
 }
 
 /* #map, #svgContainer { */
-  /* overflow: auto; */
+/* overflow: auto; */
 /* } */
 
-#svgContainer svg path { 
+#svgContainer svg path {
   fill: orange;
   transition: fill 0.3s ease;
 }
-#svgContainer svg path:hover{
+
+#svgContainer svg path:hover {
   fill: grey;
-} 
+}
+
+@keyframes popUp {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+#infoContainer {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid black;
+  padding: 10px;
+  display: none;
+  width: 150px;
+  height: 300px;
+  border-radius: 10px;
+
+}
 
 
 
