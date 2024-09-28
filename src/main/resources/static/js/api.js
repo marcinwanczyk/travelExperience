@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const countries = document.querySelectorAll('#svgContainer');
     const infoContainer = document.getElementById('infoContainer');
     let currCountryId = null;
+    let visitedCountries = new Set();
 
     countries.forEach(country => {
         country.addEventListener('click', async (event) => {
@@ -17,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 const response = await fetch(`https://restcountries.com/v3.1/name/${countryName}`);
                 const data = await response.json();
-                getCountryInfo(data[0], event.pageX, event.pageY);
+                getCountryInfo(data[0], event.pageX, event.pageY, countryId);
                 currCountryId = countryId;
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -26,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
-    function getCountryInfo(country, x, y) {
+    function getCountryInfo(country, x, y, countryId) {
         infoContainer.innerHTML = `
         <p>Name: ${country.name.common}</p>
         <p>Capital: ${country.capital}</p>
@@ -35,7 +36,12 @@ document.addEventListener('DOMContentLoaded', () => {
         <p>Region: ${country.region}</p>
         <p>Timezone: ${country.timezones ? country.timezones[0] : 'N/A'}</p>
         <p style="text-align: center;"><img src="${country.flags.svg}" alt="Flag of ${country.name.common}" width="70" ></p>
+        <button id="markVisit">Mark as visited</button>
+
+
 `;
+        document.getElementById('markVisit').addEventListener('click', () => {
+                markAsVisited(countryId);});
 
         // TODO: repair edge case where infoContainer exceeds page bounds
         requestAnimationFrame(() => {
@@ -65,6 +71,19 @@ document.addEventListener('DOMContentLoaded', () => {
             infoContainer.style.animation = 'popUp 0.2s ease-out';
         });
     }
+    // TODO: send to backend to save visited countries per user
+    function markAsVisited(countryId) {
+        const countryElement = document.getElementById(countryId);
+        if(countryElement){
+            if(visitedCountries.has(countryId)){
+                countryElement.style.fill = '';
+                visitedCountries.delete(countryId);
+            } else {
+                countryElement.style.fill = 'green';
+                visitedCountries.add(countryId);
+        }
+    }
+}
 
     function getCountryName(id) {
         const countryMap = {
