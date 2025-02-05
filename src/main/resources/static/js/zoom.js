@@ -1,42 +1,93 @@
 function addZoom(svgElement) {
-    let scale = 1;
-    const zoomFactor = 0.1; 
+  let scale = 1;
+  const zoomFactor = 0.1; // Zoom sensitivity
+  const minScale = 0.1; // Minimum zoom level
+  const maxScale = 10; // Maximum zoom level
 
-    console.log(`Initial scale: ${scale}, zoomFactor: ${zoomFactor}`);
+  console.log(`Initial scale: ${scale}, zoomFactor: ${zoomFactor}`);
 
-    svgElement.addEventListener('wheel', function(event) {
-        event.preventDefault();
-        const direction = event.deltaY < 0 ? 1 : -1;
-        let newScale = scale + (zoomFactor * direction);
-        newScale = Math.round(newScale * 10) / 10; 
-        console.log(`Attempting to zoom, direction: ${direction}, newScale: ${newScale}`);
+  // Get the original full map dimensions
+  const originalViewBox =
+    svgElement.getAttribute("viewBox") ||
+    `0 0 ${svgElement.clientWidth} ${svgElement.clientHeight}`;
+  const [originalX, originalY, originalWidth, originalHeight] = originalViewBox
+    .split(" ")
+    .map(Number);
 
-        if (newScale < 0.1) {
-            console.log('Zoom limit reached');
-        return;
-        }
+  svgElement.addEventListener("wheel", function (event) {
+    event.preventDefault();
 
-        const rect = svgElement.getBoundingClientRect();
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
+    const direction = event.deltaY < 0 ? 1 : -1; // Determine zoom in (+1) or out (-1)
+    let newScale = scale + zoomFactor * direction;
 
-        let viewBox = svgElement.getAttribute('viewBox');
-        if (!viewBox) {
-            viewBox = `0 0 ${svgElement.clientWidth} ${svgElement.clientHeight}`;
-            svgElement.setAttribute('viewBox', viewBox);
-        }
-        let [viewX, viewY, viewWidth, viewHeight] = viewBox.split(' ').map(Number);
+    // Clamp the scale between minScale and maxScale
+    if (newScale < minScale) {
+      newScale = minScale;
+    } else if (newScale > maxScale) {
+      newScale = maxScale;
+    }
 
-        const newViewWidth = viewWidth * (1 - zoomFactor * direction);
-        const newViewHeight = viewHeight * (1 - zoomFactor * direction);
-        const zoomCenterX = x / svgElement.clientWidth * viewWidth + viewX;
-        const zoomCenterY = y / svgElement.clientHeight * viewHeight + viewY;
+    // If scale didn't change, stop execution
+    if (newScale === scale) {
+      console.log("Zoom limit reached");
+      return;
+    }
 
-        viewX += (viewWidth - newViewWidth) * (zoomCenterX - viewX) / viewWidth;
-        viewY += (viewHeight - newViewHeight) * (zoomCenterY - viewY) / viewHeight;
+    let viewBox = svgElement.getAttribute("viewBox");
+    if (!viewBox) {
+      viewBox = `0 0 ${svgElement.clientWidth} ${svgElement.clientHeight}`;
+      svgElement.setAttribute("viewBox", viewBox);
+    }
 
-        svgElement.setAttribute('viewBox', `${viewX} ${viewY} ${newViewWidth} ${newViewHeight}`);
-        scale = newScale;
-        console.log(`Updated scale: ${scale}`);
-    });
+    let [viewX, viewY, viewWidth, viewHeight] = viewBox.split(" ").map(Number);
+
+    // Calculate the center of the current `viewBox`
+    const centerX = viewX + viewWidth / 2;
+    const centerY = viewY + viewHeight / 2;
+
+    if (direction > 0) {
+      // Zooming in: adjust viewBox relative to mouse pointer
+      const rect = svgElement.getBoundingClientRect();
+      const mouseX = event.clientX - rect.left;
+      const mouseY = event.clientY - rect.top;
+
+      const zoomCenterX = (mouseX / svgElement.clientWidth) * viewWidth + viewX;
+      const zoomCenterY =
+        (mouseY / svgElement.clientHeight) * viewHeight + viewY;
+
+      const newViewWidth = viewWidth * (1 - zoomFactor);
+      const newViewHeight = viewHeight * (1 - zoomFactor);
+
+      viewX += ((viewWidth - newViewWidth) * (zoomCenterX - viewX)) / viewWidth;
+      viewY +=
+        ((viewHeight - newViewHeight) * (zoomCenterY - viewY)) / viewHeight;
+
+      viewWidth = newViewWidth;
+      viewHeight = newViewHeight;
+    } else {
+      // Zooming out: adjust viewBox relative to the global center of the map
+      const globalCenterX = originalX + originalWidth / 2; // Center of the full map
+      const globalCenterY = originalY + originalHeight / 2;
+
+      const newViewWidth = viewWidth * (1 + zoomFactor);
+      const newViewHeight = viewHeight * (1 + zoomFactor);
+
+      viewX = globalCenterX - newViewWidth / 2;
+      viewY = globalCenterY - newViewHeight / 2;
+
+      viewWidth = newViewWidth;
+      viewHeight = newViewHeight;
+    }
+
+    // Update the viewBox and scale
+    svgElement.setAttribute(
+      "viewBox",
+      `${viewX} ${viewY} ${viewWidth} ${viewHeight}`
+    );
+    scale = newScale;
+
+    console.log(
+      `Zoom event: direction=${direction}, scale=${scale}, viewBox=${viewX} ${viewY} ${viewWidth} ${viewHeight}`
+    );
+  });
 }

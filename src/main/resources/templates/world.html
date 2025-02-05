@@ -9,6 +9,13 @@
         <link rel="stylesheet" href="/css/main.css">
     </head>
     <body>
+        <div class="overlay">
+        <h1><span th:text= "${username}">User</span></h1>
+        <p><span th:text="${email}"></span></p>
+        <form action="/logout" method="post">
+        <button type="submit">Logout</button>
+        </form>
+        </div>
         <div id="map" style="height: 100vh;">
             <div id="svgContainer"></div>
             <div id="infoContainer"></div>
@@ -17,21 +24,19 @@
         <script src="/js/zoom.js"></script>
         <script src="/js/drag.js"></script>
         <script src="/js/api.js"></script>
-        <!-- <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-                svg.setAttribute("width", "100%");
-                svg.setAttribute("height", "100%");
-                svg.setAttribute("viewBox", "-169.110266 83.600842 190.486279 58.508473");
-                svg.setAttribute("id", "mapSVG");
-                document.getElementById("svgContainer").appendChild(svg);
-        
-                // Assuming drag.js exposes an initializeDrag() function
-                // This is just an example; adjust based on your actual drag script
-                if (typeof initializeDrag === "function") {
-                    initializeDrag();
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const svgContainer = document.getElementById('svgContainer');
+                const svgElement = svgContainer.querySelector('svg');
+
+                if (svgElement) {
+                    addDrag(svgElement);
+                } else {
+                    console.error('SVG element not found inside #svgContainer');
                 }
             });
-        </script> -->
+        </script>
+
     </body>
 </html>
