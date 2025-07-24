@@ -4,6 +4,12 @@ document.addEventListener("DOMContentLoaded", () => {
   let currCountryId = null;
   let visitedCountries = new Set();
 
+  document.getElementById("markVisit").addEventListener("click", () => {
+    if (currCountryId) {
+      markAsVisited(currCountryId);
+    }
+  });
+
   fetch("/api/visited-countries")
     .then((response) => response.json())
     .then((data) => {
@@ -19,24 +25,23 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("Error fetching visited countries:", error)
     );
 
-  // countries.forEach((country) => {
-
   svgContainer.addEventListener("click", async (event) => {
-    const target = event.target;
+    const target = event.target.closest("[id]");
     if (target.id) {
       const countryId = target.id;
 
-      if (currCountryId == countryId) {
+      if (currCountryId === countryId) {
         infoContainer.style.display = "none";
         currCountryId = null;
         return;
       }
 
+      currCountryId = countryId;
+
       try {
         const response = await fetch(`/api/country-info/${countryId}`);
         const data = await response.json();
         getCountryInfo(data, event.pageX, event.pageY, countryId);
-        currCountryId = countryId;
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -53,63 +58,29 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  function getCountryInfo(country, x, y, countryId) {
-    infoContainer.innerHTML = `
-        <p>Name: ${country.name.common}</p>
-        <p>Capital: ${country.capital}</p>
-        <p>Population: ${country.population}</p>
-        <p>Currency: ${
-          country.currencies ? Object.keys(country.currencies)[0] : "N/A"
-        }</p>
-        <p>Region: ${country.region}</p>
-        <p>Timezone: ${country.timezones ? country.timezones[0] : "N/A"}</p>
-        <p style="text-align: center;"><img src="${
-          country.flags.svg
-        }" alt="Flag of ${country.name.common}" width="70" ></p>
-        <button id="markVisit">Mark as visited</button>
-    `;
-    document.getElementById("markVisit").addEventListener("click", () => {
-      markAsVisited(countryId);
-    });
-
-    // TODO: repair edge case where infoContainer exceeds page bounds
-    function positionInfoContainer(x, y, container) {
-      const margin = 10;
-      const viewportWidth = window.innerWidth;
-      const viewportHeight = window.innerHeight;
-
-      container.style.display = "block";
-      container.offsetHeight;
-
-      const rect = container.getBoundingClientRect();
-      const containerWidth = rect.width;
-      const containerHeight = rect.height;
-
-      if (x + containerWidth + margin > viewportWidth) {
-        x = viewportWidth - containerWidth - margin; // Move left to fit
-      } else if (x < margin) {
-        x = margin; // Move right to fit
-      }
-
-      // Adjust y to ensure the container stays within the viewport vertically
-      if (y + containerHeight + margin > viewportHeight) {
-        y = viewportHeight - containerHeight - margin; // Move up to fit
-      } else if (y < margin) {
-        y = margin; // Move down to fit
-      }
-
-      container.style.left = `${x}px`;
-      container.style.top = `${y}px`;
-
-      container.style.visibility = "visible";
-      container.style.animation = "none";
-      container.offsetHeight;
-      container.style.animation = "popUp 0.2s ease-out";
-    }
-
-    requestAnimationFrame(() => {
-      positionInfoContainer(x, y, infoContainer);
-    });
+  function getCountryInfo(country, countryId) {
+    infoContainer.classList.add("fading");
+    setTimeout(() => {
+      document.getElementById("countryName").textContent = country.name.common;
+      document.getElementById("countryFlag").src = country.flags.svg;
+      document.getElementById("countryCapital").textContent = country.capital;
+      document.getElementById("countryPopulation").textContent =
+        country.population;
+      document.getElementById("countryCurrency").textContent =
+        country.currencies ? Object.keys(country.currencies)[0] : "N/A";
+      document.getElementById("countryRegion").textContent = country.region;
+      document.getElementById("countryTimezone").textContent = country.timezones
+        ? country.timezones[0]
+        : "N/A";
+      document.getElementById("infoContainer").style.display = "block";
+      document.getElementById("markVisit").textContent = visitedCountries.has(
+        countryId
+      )
+        ? "Unmark as visited"
+        : "Mark as visited";
+      infoContainer.style.display = "block";
+      infoContainer.classList.remove("fading");
+    }, 1);
   }
 
   function markAsVisited(countryId) {
@@ -133,22 +104,16 @@ document.addEventListener("DOMContentLoaded", () => {
         body: JSON.stringify([...visitedCountries]),
       }).catch((error) =>
         console.error("Error saving visited countries:", error)
-      );
+      )
+      .finally(() => {
+        document.getElementById("markVisit").textContent = visitedCountries.has(
+          countryId
+        )
+          ? "Unmark as visited"
+          : "Mark as visited";
+      });
     } else {
       console.error(`Country not found: ${countryId}`);
     }
   }
 });
-// TODO: send to backend to save visited countries per user
-// fetch("/api/visited-countries", {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify([...visitedCountries]),
-//   }).catch((error) =>
-//     console.error("Error saving visited countries:", error)
-//   );
-// } else {
-//   console.error(`Country not found: ${countryId}`);
-// }

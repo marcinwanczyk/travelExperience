@@ -8,16 +8,19 @@
     width: 100%;
     height: 100%;
   } */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
 
 * {
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 .overlay{
   position: absolute;
-  top: 10px; /* Adjust as needed */
-  right: 10px; /* Adjust as needed */
+  top: 10px; 
+  right: 10px; 
   z-index: 10;
-  background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+  background-color: rgba(255, 255, 255, 0.8); 
   padding: 10px;
   border-radius: 5px;
 }
@@ -138,6 +141,26 @@ h2 {
 
 }
 
+.info-box {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background-color: rgba(255, 255, 255, 0.65);
+  padding: 10px;
+  border-radius: 5px;
+  z-index: 1000;
+  opacity: 0.8;
+  max-width: 300px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6)
+}
+.info-box h2 {
+  color: black
+}
+
+
+
+
+
 .button-container {
   position: relative;
   display: flex;
@@ -239,7 +262,7 @@ h2 {
   }
 }
 
-#infoContainer {
+/* #infoContainer {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -251,7 +274,7 @@ h2 {
   height: 300px;
   border-radius: 10px;
 
-}
+} */
 
 
 

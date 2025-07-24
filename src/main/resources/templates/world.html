@@ -18,7 +18,19 @@
         </div>
         <div id="map" style="height: 100vh;">
             <div id="svgContainer"></div>
-            <div id="infoContainer"></div>
+            <div id="infoContainer" class="info-box" style="display: none;">
+                <h2 id="countryName"></h2>
+                <img id="countryFlag" width="60" />
+                <ul>
+                    <li><strong>Capital:</strong> <span id="countryCapital"></span></li>
+                    <li><strong>Population:</strong> <span id="countryPopulation"></span></li>
+                    <li><strong>Currency:</strong> <span id="countryCurrency"></span></li>
+                    <li><strong>Region:</strong> <span id="countryRegion"></span></li>
+                    <li><strong>Timezone:</strong> <span id="countryTimezone"></span></li>
+                </ul>
+                <button id="markVisit"></button>
+                <!-- <span id="closeInfo" style="cursor: pointer;">x</span> -->
+            </div>
         </div>
         <script src="/js/loadSVG.js"></script>
         <script src="/js/zoom.js"></script>
