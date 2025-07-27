@@ -54,9 +54,10 @@ document.addEventListener("DOMContentLoaded", () => {
       currCountryId = null;
     }
   });
-
+// mark as visited after double-click
   svgContainer.addEventListener("dblclick", (event) => {
     const target = event.target.closest("[id]");
+    // check if country on this position
     if (target && target.id && svgContainer.contains(target)) {
       markAsVisited(target.id);
     }

@@ -65,7 +65,7 @@ function addZoom(svgElement) {
       viewWidth = newViewWidth;
       viewHeight = newViewHeight;
     } else {
-      // Zooming out: adjust viewBox relative to the global center of the map
+      // Zooming out: adjust viewBox relative to the actual position of the map
 
       const newViewWidth = viewWidth * (1 + zoomFactor);
       const newViewHeight = viewHeight * (1 + zoomFactor);
