@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
+// import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 
-@CrossOrigin(origins = "https://worldexpo.netlify.app")
+// @CrossOrigin(origins = "https://worldexpo.netlify.app")
 @RestController
 @RequestMapping("/api")
 public class APIController {
@@ -35,7 +35,7 @@ public class APIController {
     @GetMapping("/country-info/{countryId}")
     public ResponseEntity<Object> getCountryInfo(@PathVariable String countryId) {
         String countryName = getCountryName(countryId);
-        String url = "https://restcountries.com/v3.1/name/" + countryName;
+        String url = "https://restcountries.com/v3.1/name/" + countryName + "?fullText=true";
 
         Object[] countries = restTemplate.getForObject(url, Object[].class);
         if (countries != null && countries.length > 0) {
