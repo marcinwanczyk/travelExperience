@@ -2,7 +2,7 @@ function addZoom(svgElement) {
   let scale = 1;
   const zoomFactor = 0.1; // Zoom sensitivity
   const minScale = 0.1; // Minimum zoom level
-  const maxScale = 10; // Maximum zoom level
+  const maxScale = 7; // Maximum zoom level
 
   console.log(`Initial scale: ${scale}, zoomFactor: ${zoomFactor}`);
 
@@ -66,14 +66,12 @@ function addZoom(svgElement) {
       viewHeight = newViewHeight;
     } else {
       // Zooming out: adjust viewBox relative to the global center of the map
-      const globalCenterX = originalX + originalWidth / 2; // Center of the full map
-      const globalCenterY = originalY + originalHeight / 2;
 
       const newViewWidth = viewWidth * (1 + zoomFactor);
       const newViewHeight = viewHeight * (1 + zoomFactor);
 
-      viewX = globalCenterX - newViewWidth / 2;
-      viewY = globalCenterY - newViewHeight / 2;
+      viewX = centerX - newViewWidth / 2;
+      viewY = centerY - newViewHeight / 2;
 
       viewWidth = newViewWidth;
       viewHeight = newViewHeight;

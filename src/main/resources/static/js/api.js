@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (currCountryId) {
       markAsVisited(currCountryId);
     }
+    
   });
 
   fetch("/api/visited-countries")
@@ -20,6 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
           countryElement.style.fill = "green";
         }
       });
+      visitedPercentage();
     })
     .catch((error) =>
       console.error("Error fetching visited countries:", error)
@@ -39,8 +41,10 @@ document.addEventListener("DOMContentLoaded", () => {
       currCountryId = countryId;
 
       try {
+        console.log(`Fetching data for country: ${countryId}`);
         const response = await fetch(`/api/country-info/${countryId}`);
         const data = await response.json();
+        console.log("Country data fetched:", data);
         getCountryInfo(data, event.pageX, event.pageY, countryId);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -51,6 +55,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  svgContainer.addEventListener("dblclick", (event) => {
+    const target = event.target.closest("[id]");
+    if (target && target.id && svgContainer.contains(target)) {
+      markAsVisited(target.id);
+    }
+  });
+
+
   svgContainer.addEventListener("mousedown", (event) => {
     if (event.button === 0) {
       infoContainer.style.display = "none";
@@ -58,7 +70,22 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  function getCountryInfo(country, countryId) {
+  function visitedPercentage() {
+    const allCountries =
+      svgContainer.querySelectorAll("path[id], g[id]").length;
+
+    const visitedCount = visitedCountries.size;
+    const percentage =
+      allCountries > 0 ? ((visitedCount / allCountries) * 100).toFixed(1) : 0;
+    visitedPercentage.textContent = `${percentage}%`;
+    percentageAnimation(parseFloat(percentage));
+
+    console.log(
+      `Visited: ${visitedCount}, Total: ${allCountries}, Percentage: ${percentage}%`
+    );
+  }
+
+  function getCountryInfo(country,x ,y, countryId) {
     infoContainer.classList.add("fading");
     setTimeout(() => {
       document.getElementById("countryName").textContent = country.name.common;
@@ -102,16 +129,18 @@ document.addEventListener("DOMContentLoaded", () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify([...visitedCountries]),
-      }).catch((error) =>
-        console.error("Error saving visited countries:", error)
-      )
-      .finally(() => {
-        document.getElementById("markVisit").textContent = visitedCountries.has(
-          countryId
+      })
+        .catch((error) =>
+          console.error("Error saving visited countries:", error)
         )
-          ? "Unmark as visited"
-          : "Mark as visited";
-      });
+        .finally(() => {
+          document.getElementById("markVisit").textContent =
+            visitedCountries.has(countryId)
+              ? "Unmark as visited"
+              : "Mark as visited";
+
+          visitedPercentage();
+        });
     } else {
       console.error(`Country not found: ${countryId}`);
     }

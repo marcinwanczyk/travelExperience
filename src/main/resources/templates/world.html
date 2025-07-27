@@ -10,8 +10,9 @@
     </head>
     <body>
         <div class="overlay">
-        <h1><span th:text= "${username}">User</span></h1>
-        <p><span th:text="${email}"></span></p>
+        <!-- <h1><span th:text= "${username}">User</span></h1>
+        <p><span th:text="${email}"></span></p> -->
+        <div id="percentage">You've seen: 0% of the world!</div>
         <form action="/logout" method="post">
         <button type="submit">Logout</button>
         </form>
@@ -36,6 +37,7 @@
         <script src="/js/zoom.js"></script>
         <script src="/js/drag.js"></script>
         <script src="/js/api.js"></script>
+        <script src="/js/percentage.js"></script>
 
         <script>
             document.addEventListener('DOMContentLoaded', function () {
