@@ -17,7 +17,7 @@ public class HomeController {
     }
     @GetMapping("/")
     public String landingPage(){
-        return "landing";
+        return "index";
     }
     @GetMapping("/world")
     public String worldPage(Model model){
