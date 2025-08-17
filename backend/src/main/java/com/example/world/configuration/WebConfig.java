@@ -1,4 +1,6 @@
 package com.example.world.configuration;
+import java.beans.BeanProperty;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
@@ -15,6 +17,11 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedOrigins("https://worldexpo.netlify.app")
                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                 .allowCredentials(true);
+    }
+    // railway reverse proxy bugging communication 
+    @BeanProperty
+    ForwardedHeaderFilter forwardedHeaderFilter() {
+        return new ForwardedHeaderFilter();
     }
 
     @Bean
