@@ -6,13 +6,15 @@ document.addEventListener("DOMContentLoaded", () => {
   let currCountryId = null;
   let visitedCountries = new Set();
 
+  const backendURL = BACKEND_URL.replace("http://", "https://");
+
   document.getElementById("markVisit").addEventListener("click", () => {
     if (currCountryId) {
       markAsVisited(currCountryId);
     }
   });
 
-  fetch(`${BACKEND_URL}/api/visited-countries`, {
+  fetch(`${backendURL}/api/visited-countries`, {
     credentials: "include"
   })
     .then((response) => {
@@ -47,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       try {
         console.log(`Fetching data for country: ${countryId}`);
-        const response = await fetch(`${BACKEND_URL}/api/country-info/${countryId}`, {
+        const response = await fetch(`${backendURL}/api/country-info/${countryId}`, {
           credentials: "include"
         });
         const data = await response.json();
@@ -130,11 +132,12 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log(`Country marked: ${countryId}`);
       }
       // Save visited countries to the backend
-      fetch(`${BACKEND_URL}/api/visited-countries`, {
+      fetch(`${backendURL}/api/visited-countries`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify([...visitedCountries]),
       })
         .catch((error) =>

@@ -51,7 +51,9 @@
                 // Add logout functionality
                 document.getElementById('logoutButton').addEventListener('click', function() {
                     const BACKEND_URL = "https://travelexperience-production.up.railway.app";
-                    fetch(`${BACKEND_URL}/logout`, {
+                    const backendURL = BACKEND_URL.replace("http://", "https://");
+                    
+                    fetch(`${backendURL}/logout`, {
                         method: 'POST',
                         credentials: 'include'
                     })

@@ -84,7 +84,10 @@
                 const email = document.getElementById("loginEmail").value;
                 const password = document.getElementById("loginPassword").value;
                 
-                fetch(`${BACKEND_URL}/login`, {
+                // Make sure we're using HTTPS
+                const backendURL = BACKEND_URL.replace("http://", "https://");
+                
+                fetch(`${backendURL}/login`, {
                     method: "POST",
                     credentials: "include",
                     headers: {
@@ -115,7 +118,10 @@
                 const email = document.getElementById("regEmail").value;
                 const password = document.getElementById("regPassword").value;
                 
-                fetch(`${BACKEND_URL}/register`, {
+                // Make sure we're using HTTPS
+                const backendURL = BACKEND_URL.replace("http://", "https://");
+                
+                fetch(`${backendURL}/register`, {
                     method: "POST",
                     credentials: "include",
                     headers: {
