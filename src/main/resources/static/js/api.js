@@ -8,11 +8,12 @@ document.addEventListener("DOMContentLoaded", () => {
     if (currCountryId) {
       markAsVisited(currCountryId);
     }
-    
   });
 
   fetch("/api/visited-countries")
-    .then((response) => response.json())
+    .then((response) => {
+      return response.json();
+    })
     .then((data) => {
       visitedCountries = new Set(data);
       visitedCountries.forEach((countryId) => {
@@ -54,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
       currCountryId = null;
     }
   });
-// mark as visited after double-click
+  // mark as visited after double-click
   svgContainer.addEventListener("dblclick", (event) => {
     const target = event.target.closest("[id]");
     // check if country on this position
@@ -62,7 +63,6 @@ document.addEventListener("DOMContentLoaded", () => {
       markAsVisited(target.id);
     }
   });
-
 
   svgContainer.addEventListener("mousedown", (event) => {
     if (event.button === 0) {
@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   }
 
-  function getCountryInfo(country,x ,y, countryId) {
+  function getCountryInfo(country, x, y, countryId) {
     infoContainer.classList.add("fading");
     setTimeout(() => {
       document.getElementById("countryName").textContent = country.name.common;

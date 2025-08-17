@@ -1,8 +1,14 @@
 package com.example.world.controller;
 
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.world.entity.User;
@@ -26,12 +32,12 @@ public class AuthController {
         } else if (checkLogin == 0) {
             redirectAttributes.addFlashAttribute("message", "Wrong password, try again!");
             return "redirect:/";
-        } else
-            return "redirect:/world";
+        }
+        
+        return "redirect:/world";
     }
 
-    // TODO: fix registering(while passing existing credentials, jumps back to login
-    // form)
+
     @PostMapping("/register")
     public String processRegister(@ModelAttribute User user, RedirectAttributes redirectAttributes) {
         boolean checkRegister = userService.register(user, redirectAttributes);
@@ -43,4 +49,16 @@ public class AuthController {
         return "redirect:/world";
     }
 
+    @PostMapping("/logout")
+    public String processLogout(RedirectAttributes redirectAttributes) {
+        userService.logout();
+        redirectAttributes.addFlashAttribute("message", "Logout successful!");
+        return "redirect:/";
+    }
+
+    @GetMapping("/logout")
+    public String logoutGet() {
+        // Do not perform logout logic here, just redirect
+        return "redirect:/";
+    }
 }

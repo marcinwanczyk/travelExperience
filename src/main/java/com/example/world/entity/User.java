@@ -1,29 +1,19 @@
 package com.example.world.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import java.util.HashSet;
+import java.util.Set;
 
-@Entity
-@Table(name = "user")
+@Document(collection = "users")
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private int id;
-
-    @Column(name = "username", nullable = false)
+    private String id;
     private String username;
-
-    @Column(name = "password", nullable = false)
     private String password;
-
-    @Column(name = "email", nullable = false)
     private String email;
+    private Set<String> visitedCountries = new HashSet<>();
 
     public User() {
     }
@@ -34,28 +24,51 @@ public class User {
         this.email = email;
     }
 
-    public String getEmail() {
-        return email;
-    }
-    public int getId() {
+    public String getId() {
         return id;
     }
-    public String getPassword() {
-        return password;
+
+    public void setId(String id) {
+        this.id = id;
     }
+
     public String getUsername() {
         return username;
     }
-    public void setEmail(String email) {
-        this.email = email;
+
+    public void setUsername(String username) {
+        this.username = username;
     }
-    public void setId(int id) {
-        this.id = id;
+
+    public String getPassword() {
+        return password;
     }
+
     public void setPassword(String password) {
         this.password = password;
     }
-    public void setUsername(String username) {
-        this.username = username;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Set<String> getVisitedCountries() {
+        return visitedCountries;
+    }
+
+    public void setVisitedCountries(Set<String> visitedCountries) {
+        this.visitedCountries = visitedCountries;
+    }
+
+    public void addVisitedCountry(String country) {
+        this.visitedCountries.add(country);
+    }
+
+    public void removeVisitedCountry(String country) {
+        this.visitedCountries.remove(country);
     }
 }

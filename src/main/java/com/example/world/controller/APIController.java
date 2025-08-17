@@ -1,10 +1,9 @@
 package com.example.world.controller;
 
-import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-// import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import com.example.world.entity.User;
+import com.example.world.repository.UserRepository;
+import com.example.world.service.UserService;
 
 
 // @CrossOrigin(origins = "https://worldexpo.netlify.app")
@@ -19,17 +21,37 @@ import org.springframework.web.client.RestTemplate;
 @RequestMapping("/api")
 public class APIController {
 
-    private final RestTemplate restTemplate = new RestTemplate();
-    private Set<String> visitedCountries = new HashSet<>();
+    @Autowired
+    private RestTemplate restTemplate;
+
+    @Autowired
+    private UserService userService;
+    private UserRepository userRepository;
+
+    public APIController(UserRepository userRepository, UserService userService) {
+        this.userRepository = userRepository;
+        this.userService = userService;
+    }
+    
 
     @GetMapping("/visited-countries")
-    public Set<String> getVisitedCountries() {
-        return visitedCountries;
+    public ResponseEntity<Set<String>> getVisitedCountries() {
+        User user = userService.getCurrentUser();
+        if (user == null) {
+            return ResponseEntity.status(401).build();
+        }
+        return ResponseEntity.ok(user.getVisitedCountries());
     }
 
     @PostMapping("/visited-countries")
-    public void saveVisitedCountries(@RequestBody Set<String> countries) {
-        visitedCountries = countries;
+    public ResponseEntity<Void> saveVisitedCountries(@RequestBody Set<String> countries) {
+        User user = userService.getCurrentUser();
+        if (user == null) {
+            return ResponseEntity.status(401).build();
+        }
+        user.getVisitedCountries().addAll(countries);
+        userRepository.save(user); // Save updated user
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/country-info/{countryId}")
