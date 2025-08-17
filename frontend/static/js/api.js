@@ -12,7 +12,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  fetch(`${BACKEND_URL}/api/visited-countries`)
+  fetch(`${BACKEND_URL}/api/visited-countries`, {
+    credentials: "include"
+  })
     .then((response) => {
       return response.json();
     })
@@ -45,7 +47,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       try {
         console.log(`Fetching data for country: ${countryId}`);
-        const response = await fetch(`${BACKEND_URL}/api/country-info/${countryId}`);
+        const response = await fetch(`${BACKEND_URL}/api/country-info/${countryId}`, {
+          credentials: "include"
+        });
         const data = await response.json();
         console.log("Country data fetched:", data);
         getCountryInfo(data, event.pageX, event.pageY, countryId);

@@ -6,16 +6,14 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>travelExpo</title>
-        <link rel="stylesheet" href="/static/css/main.css">
+        <link rel="stylesheet" href="static/css/main.css">
     </head>
     <body>
         <div class="overlay">
         <!-- <h1><span th:text= "${username}">User</span></h1>
         <p><span th:text="${email}"></span></p> -->
         <div id="percentage">You've seen: 0% of the world!</div>
-        <form action="/logout" method="post">
-        <button type="submit">Logout</button>
-        </form>
+        <button id="logoutButton">Logout</button>
         </div>
         <div id="map" style="height: 100vh;">
             <div id="svgContainer"></div>
@@ -33,11 +31,11 @@
                 <!-- <span id="closeInfo" style="cursor: pointer;">x</span> -->
             </div>
         </div>
-        <script src="/js/loadSVG.js"></script>
-        <script src="/js/zoom.js"></script>
-        <script src="/js/drag.js"></script>
-        <script src="/js/api.js"></script>
-        <script src="/js/percentage.js"></script>
+        <script src="static/js/loadSVG.js"></script>
+        <script src="static/js/zoom.js"></script>
+        <script src="static/js/drag.js"></script>
+        <script src="static/js/api.js"></script>
+        <script src="static/js/percentage.js"></script>
 
         <script>
             document.addEventListener('DOMContentLoaded', function () {
@@ -49,6 +47,21 @@
                 } else {
                     console.error('SVG element not found inside #svgContainer');
                 }
+                
+                // Add logout functionality
+                document.getElementById('logoutButton').addEventListener('click', function() {
+                    const BACKEND_URL = "https://travelexperience-production.up.railway.app";
+                    fetch(`${BACKEND_URL}/logout`, {
+                        method: 'POST',
+                        credentials: 'include'
+                    })
+                    .then(() => {
+                        window.location.href = 'index.html';
+                    })
+                    .catch(error => {
+                        console.error('Logout failed:', error);
+                    });
+                });
             });
         </script>
 
