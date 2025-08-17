@@ -22,10 +22,10 @@ canvasContainer.appendChild(renderer.domElement)
 
 const sphere = new THREE.Mesh(new THREE.SphereGeometry(6, 60, 60),
     new THREE.MeshBasicMaterial
-        ({ map: new THREE.TextureLoader().load('/img/globe.jpg') }))
+        ({ map: new THREE.TextureLoader().load('static/img/globe.jpg') }))
 scene.add(sphere)
 
-// const glowMap = new THREE.TextureLoader().load('/img/ring1.png')
+// const glowMap = new THREE.TextureLoader().load('static/img/ring1.png')
 // const glowMaterial = new THREE.MeshBasicMaterial({ map: glowMap, transparent: true, opacity: 0.2, blending: THREE.AdditiveBlending })
 // const glowMesh = new THREE.Mesh(new THREE.SphereGeometry(5.2, 50, 50), glowMaterial)
 // scene.add(glowMesh) 

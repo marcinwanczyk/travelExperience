@@ -6,4 +6,4 @@ function loadSVG(url, containerID) {
         addDrag(svgElement);
     }).catch(error => console.error("error loading svg file: ", error));
 }
-    loadSVG("svg/world.svg", "svgContainer");
+    loadSVG("static/svg/world.svg", "svgContainer");
