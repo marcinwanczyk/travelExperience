@@ -1,3 +1,5 @@
+const BACKEND_URL = "https://travelexperience-production.up.railway.app";
+
 document.addEventListener("DOMContentLoaded", () => {
   const countries = document.querySelectorAll("#svgContainer");
   const infoContainer = document.getElementById("infoContainer");
@@ -10,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  fetch("/api/visited-countries")
+  fetch(`${BACKEND_URL}/api/visited-countries`)
     .then((response) => {
       return response.json();
     })
@@ -43,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       try {
         console.log(`Fetching data for country: ${countryId}`);
-        const response = await fetch(`/api/country-info/${countryId}`);
+        const response = await fetch(`${BACKEND_URL}/api/country-info/${countryId}`);
         const data = await response.json();
         console.log("Country data fetched:", data);
         getCountryInfo(data, event.pageX, event.pageY, countryId);
@@ -124,7 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log(`Country marked: ${countryId}`);
       }
       // Save visited countries to the backend
-      fetch("/api/visited-countries", {
+      fetch(`${BACKEND_URL}/api/visited-countries`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
