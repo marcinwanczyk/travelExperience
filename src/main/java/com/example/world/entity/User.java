@@ -4,7 +4,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.HashSet;
 import java.util.Set;
-
+import java.util.Map;
+import java.util.HashMap;
 @Document(collection = "users")
 public class User {
 
@@ -14,6 +15,8 @@ public class User {
     private String password;
     private String email;
     private Set<String> visitedCountries = new HashSet<>();
+    private Map<String, String> countryImages = new HashMap<>();
+
 
     public User() {
     }
@@ -70,5 +73,13 @@ public class User {
 
     public void removeVisitedCountry(String country) {
         this.visitedCountries.remove(country);
+    }
+
+    public Map<String, String> getCountryImages() {
+        return countryImages;
+    }
+
+    public void setCountryImages(Map<String, String> countryImages) {
+        this.countryImages = countryImages;
     }
 }

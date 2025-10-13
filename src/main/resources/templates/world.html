@@ -10,12 +10,12 @@
     </head>
     <body>
         <div class="overlay">
-        <!-- <h1><span th:text= "${username}">User</span></h1>
+            <!-- <h1><span th:text= "${username}">User</span></h1>
         <p><span th:text="${email}"></span></p> -->
-        <div id="percentage">You've seen: 0% of the world!</div>
-        <form action="/logout" method="post">
-        <button type="submit">Logout</button>
-        </form>
+            <div id="percentage">0%</div>
+            <form action="/logout" method="post">
+                <button type="submit">Logout</button>
+            </form>
         </div>
         <div id="map" style="height: 100vh;">
             <div id="svgContainer"></div>
@@ -23,14 +23,34 @@
                 <h2 id="countryName"></h2>
                 <img id="countryFlag" width="60" />
                 <ul>
-                    <li><strong>Capital:</strong> <span id="countryCapital"></span></li>
-                    <li><strong>Population:</strong> <span id="countryPopulation"></span></li>
-                    <li><strong>Currency:</strong> <span id="countryCurrency"></span></li>
-                    <li><strong>Region:</strong> <span id="countryRegion"></span></li>
-                    <li><strong>Timezone:</strong> <span id="countryTimezone"></span></li>
+                    <li><strong>Capital:</strong> <span
+                            id="countryCapital"></span></li>
+                    <li><strong>Population:</strong> <span
+                            id="countryPopulation"></span></li>
+                    <li><strong>Currency:</strong> <span
+                            id="countryCurrency"></span></li>
+                    <li><strong>Region:</strong> <span
+                            id="countryRegion"></span></li>
+                    <li><strong>Timezone:</strong> <span
+                            id="countryTimezone"></span></li>
                 </ul>
                 <button id="markVisit"></button>
-                <!-- <span id="closeInfo" style="cursor: pointer;">x</span> -->
+                <div id="countryImageSection" style="display: none;">
+                    <div class="image-container">
+                        <img id="countryUserImage" alt="Your photo"
+                            style="max-width: 100%; border-radius: 6px; margin-top: 10px;">
+                    </div>
+
+                    <div class="image-actions">
+                        <button id="addImageBtn" class="small-button">Add
+                            Image</button>
+                        <button id="deleteImageBtn" class="delete-button"
+                            style="display: none;">Delete Image</button>
+                        <input type="file" id="imageUpload" accept="image/*"
+                            style="display: none;">
+                    </div>
+                </div>
+
             </div>
         </div>
         <script src="/js/loadSVG.js"></script>

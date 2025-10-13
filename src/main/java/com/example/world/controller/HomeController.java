@@ -9,18 +9,25 @@ import com.example.world.service.UserService;
 
 @Controller
 public class HomeController {
-    
+
     private UserService userService;
 
     public HomeController(UserService userService) {
         this.userService = userService;
     }
+
     @GetMapping("/")
-    public String landingPage(){
+    public String landingPage() {
         return "landing";
     }
+
     @GetMapping("/world")
-    public String worldPage(Model model){
+    public String worldPage(Model model) {
+
+        if (!userService.isAuthenticated()) {
+            return "redirect:/login";
+        }
+        
         User currUser = userService.getCurrentUser();
         model.addAttribute("email", currUser.getEmail());
         model.addAttribute("username", currUser.getUsername());

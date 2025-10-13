@@ -1,10 +1,5 @@
 package com.example.world.controller;
 
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +8,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.world.entity.User;
 import com.example.world.service.UserService;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 public class AuthController {
@@ -33,10 +31,9 @@ public class AuthController {
             redirectAttributes.addFlashAttribute("message", "Wrong password, try again!");
             return "redirect:/";
         }
-        
+
         return "redirect:/world";
     }
-
 
     @PostMapping("/register")
     public String processRegister(@ModelAttribute User user, RedirectAttributes redirectAttributes) {
@@ -49,16 +46,12 @@ public class AuthController {
         return "redirect:/world";
     }
 
-    @PostMapping("/logout")
-    public String processLogout(RedirectAttributes redirectAttributes) {
+    @GetMapping("/logout")
+    public String processLogout(HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) {
         userService.logout();
         redirectAttributes.addFlashAttribute("message", "Logout successful!");
         return "redirect:/";
     }
 
-    @GetMapping("/logout")
-    public String logoutGet() {
-        // Do not perform logout logic here, just redirect
-        return "redirect:/";
-    }
+    
 }

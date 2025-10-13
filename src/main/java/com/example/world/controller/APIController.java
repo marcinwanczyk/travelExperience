@@ -1,5 +1,6 @@
 package com.example.world.controller;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+
 import com.example.world.entity.User;
 import com.example.world.repository.UserRepository;
 import com.example.world.service.UserService;
-
 
 // @CrossOrigin(origins = "https://worldexpo.netlify.app")
 @RestController
@@ -32,7 +33,6 @@ public class APIController {
         this.userRepository = userRepository;
         this.userService = userService;
     }
-    
 
     @GetMapping("/visited-countries")
     public ResponseEntity<Set<String>> getVisitedCountries() {
@@ -49,7 +49,7 @@ public class APIController {
         if (user == null) {
             return ResponseEntity.status(401).build();
         }
-        user.getVisitedCountries().addAll(countries);
+        user.setVisitedCountries(new HashSet<>(countries));
         userRepository.save(user); // Save updated user
         return ResponseEntity.ok().build();
     }

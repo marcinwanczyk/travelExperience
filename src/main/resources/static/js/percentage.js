@@ -33,6 +33,6 @@ function percentageAnimation(targetPercentage) {
       clearInterval(interval);
     }
 
-    box.textContent = `You've seen: ${current.toFixed(1)}% of the world!`;
+    box.textContent = `${current.toFixed(1)}% `;
   }, stepTime);
 }

@@ -19,6 +19,10 @@ public class UserService {
         this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
+    public boolean isAuthenticated() {
+        return currUser != null;
+    }
+
     public User getCurrentUser() {
         return userRepository.findByEmail(currUser);
     }
