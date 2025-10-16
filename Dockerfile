@@ -11,4 +11,6 @@ FROM openjdk:17-jdk-slim
 WORKDIR /app
 COPY --from=build /app/target/world-0.0.1-SNAPSHOT.jar ./app.jar
 
-CMD ["java", "-jar", "app.jar"]
+EXPOSE ${PORT:-8080}
+
+CMD java -Dserver.port=${PORT:-8080} -jar app.jar

@@ -21,15 +21,6 @@ public class WebConfig implements WebMvcConfigurer {
         this.noStore = noStore;
     }
 
-    // @SuppressWarnings("null")
-    // @Override
-    // public void addCorsMappings(CorsRegistry registry) {
-    // registry.addMapping("/**")
-    // .allowedOrigins("https://worldexpo.netlify.app")
-    // .allowedMethods("GET", "POST", "PUT", "DELETE")
-    // .allowCredentials(true);
-    // }
-
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(authFilter)
                 .addPathPatterns("/world", "/api/**")

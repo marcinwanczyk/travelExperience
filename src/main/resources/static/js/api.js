@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  fetch("/api/visited-countries")
+  fetch("/api/visited-countries", { credentials: 'include' })
     .then((response) => {
       return response.json();
     })
@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       console.log(`Fetching data for country: ${countryId}`);
-      const response = await fetch(`/api/country-info/${countryId}`);
+      const response = await fetch(`/api/country-info/${countryId}`, { credentials: 'include' });
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -217,7 +217,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!imgElement || !addImageBtn) return;
 
-    fetch(`/api/images/${countryId}`)
+    fetch(`/api/images/${countryId}`, { credentials: 'include' })
       .then((response) => {
         if (response.ok) {
           return response.json();
