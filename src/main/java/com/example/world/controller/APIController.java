@@ -17,7 +17,6 @@ import com.example.world.entity.User;
 import com.example.world.repository.UserRepository;
 import com.example.world.service.UserService;
 
-// @CrossOrigin(origins = "https://worldexpo.netlify.app")
 @RestController
 @RequestMapping("/api")
 public class APIController {
